@@ -1,0 +1,24 @@
+.section {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+    margin-bottom: 3.8rem;
+
+	& img {
+		width: 70px;
+		border-radius: 40px;
+		margin: 0 auto 1.25rem;
+	}
+	p {
+		// margin-left: 2.3rem;
+		margin: 0 auto;
+		max-width: 14rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.name {
+		margin-bottom: 1.2rem;
+	}
+}

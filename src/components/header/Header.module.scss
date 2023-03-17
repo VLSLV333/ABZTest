@@ -1,0 +1,27 @@
+.header {
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url('../../assets/headerBG/pexels-alexandr-podvalny-1227513.jpeg');
+	text-align: center;
+	background-size: 345%;
+	background-position-x: 51%;
+	background-position-y: 98.2%;
+	color: #ffffff;
+    
+    min-height: 500px;
+
+	& h1 {
+		padding: 2.5rem 2rem 0.4rem;
+	}
+
+	& p {
+		padding: 1rem;
+		position: relative;
+		bottom: 1px;
+	}
+
+	& button {
+		margin: 1rem 1rem 2.5rem;
+		position: relative;
+		bottom: 1px;
+	}
+}

@@ -1,0 +1,90 @@
+@import '../../scss/variables';
+
+.footer {
+	padding: 1rem;
+	text-align: center;
+
+	& h1 {
+		margin-bottom: 3.15rem;
+	}
+}
+.firstTree {
+	font-size: 16px;
+	line-height: 26px;
+	padding: 0.8rem 0.93rem;
+	background: transparent;
+	border: 1px solid #cacaca;
+	border-radius: 4px;
+	margin-bottom: 3.15rem;
+	width: 100%;
+	outline: currentColor;
+}
+
+.firstTree:last-of-type {
+	margin-bottom: 2.7rem;
+}
+.file {
+	position: relative;
+	display: block;
+	cursor: pointer;
+	height: 3rem;
+	margin-bottom: 3.5rem;
+
+	& input {
+		min-width: 14rem;
+		margin: 0;
+		filter: alpha(opacity=0);
+		opacity: 0;
+	}
+}
+
+.fileCustom {
+	position: absolute;
+	right: 0;
+	left: 1px;
+	z-index: 5;
+	height: 3.35rem;
+	padding: 0.5rem 1rem;
+	line-height: 2.3;
+	color: #979797;
+	border: 0.075rem solid #cacaca;
+	border-radius: 0.25rem;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	&:after {
+		position: absolute;
+		right: 15.25rem;
+		bottom: -0.05rem;
+		z-index: 6;
+		display: block;
+		content: 'Upload';
+		height: 3.35rem;
+		padding: 0.5rem 0.90rem;
+		line-height: 2.3;
+		color: black;
+		border: 1px solid black;
+		border-radius: 0.25rem 0 0 0.25rem;
+	}
+	&:before {
+		position: absolute;
+		right: 5.9rem;
+		content: 'Upload your photo';
+	}
+}
+
+.pSelect {
+	margin-bottom: 0.75rem;
+	text-align: flex-start;
+}
+
+.errorText {
+	color: $error;
+	margin: -3rem 0 1.27rem;
+}
+
+.errorBorder {
+	border: 2px solid $error;
+}
