@@ -4,11 +4,14 @@ import SubmitContext from '../../store/submit-context';
 
 import { useEffect, useState, useContext, useCallback } from 'react';
 
+import { Circle } from 'react-preloaders';
+
 import style from './MainSection.module.scss';
 
 let firstRender = true;
 
 const MainSection = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const context = useContext(SubmitContext);
 	const [usersArray, setUsersArray] = useState([]);
 	const [nextLinkToFetch, setNextLinkToFetch] = useState('');
@@ -111,30 +114,33 @@ const MainSection = () => {
 	}
 
 	return (
-		<main className={style.main}>
-			<h1>Working with GET request</h1>
-			{!errors.success && <p className={style.error}>{errors.message}</p>}
-			{errorsArray &&
-				!errors.success &&
-				errorsArray.map((errMes) => (
-					<p key={errMes} className={style.error}>
-						{errMes}
-					</p>
+		<>
+			<main className={style.main}>
+				<h1>Working with GET request</h1>
+				{!errors.success && <p className={style.error}>{errors.message}</p>}
+				{errorsArray &&
+					!errors.success &&
+					errorsArray.map((errMes) => (
+						<p key={errMes} className={style.error}>
+							{errMes}
+						</p>
+					))}
+				{usersArray?.map((user) => (
+					<UserCard
+						key={user.id}
+						email={user.email}
+						name={user.name}
+						photo={user.photo}
+						position={user.position}
+						phone={user.phone}
+					/>
 				))}
-			{usersArray?.map((user) => (
-				<UserCard
-					key={user.id}
-					email={user.email}
-					name={user.name}
-					photo={user.photo}
-					position={user.position}
-					phone={user.phone}
-				/>
-			))}
-			{!!nextLinkToFetch && (
-				<Button txt={'Show more'} onClick={showMoreButtonHandler} />
-			)}
-		</main>
+				{!!nextLinkToFetch && (
+					<Button txt={'Show more'} onClick={showMoreButtonHandler} />
+				)}
+			</main>
+			<Circle />
+		</>
 	);
 };
 
