@@ -20,6 +20,8 @@ const UserCard = ({ email, name, photo, position, phone }) => {
 					src={`${imgLink}`}
 					alt='beautiful user'
 					onError={imageErrorHandler}
+					width='70px'
+					height='70px'
 				/>
 			)}
 			{errorInImage && <PhotoFallBack />}

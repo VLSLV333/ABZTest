@@ -1,17 +1,17 @@
 import UserCard from './userCard/UserCard';
 import Button from '../../common/Button/Button';
+
 import SubmitContext from '../../store/submit-context';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 import { useEffect, useState, useContext, useCallback } from 'react';
-
-import { Circle } from 'react-preloaders';
 
 import style from './MainSection.module.scss';
 
 let firstRender = true;
 
 const MainSection = () => {
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const context = useContext(SubmitContext);
 	const [usersArray, setUsersArray] = useState([]);
 	const [nextLinkToFetch, setNextLinkToFetch] = useState('');
@@ -21,6 +21,7 @@ const MainSection = () => {
 	});
 
 	const getNewUsers = useCallback(async (link, update = null) => {
+		setIsLoading(true);
 		const response = await fetch(link);
 
 		if (response.status === 404) {
@@ -29,6 +30,7 @@ const MainSection = () => {
 				message: 'Page not found',
 			});
 			setNextLinkToFetch(null);
+			setIsLoading(false);
 			return;
 		}
 
@@ -39,6 +41,7 @@ const MainSection = () => {
 				message: err.message,
 				fails: err.fails,
 			});
+			setIsLoading(false);
 			return;
 		}
 
@@ -47,6 +50,7 @@ const MainSection = () => {
 				success: false,
 				message: 'Coudln`t fetch data :(',
 			});
+			setIsLoading(false);
 			return;
 		}
 
@@ -57,7 +61,7 @@ const MainSection = () => {
 			: setUsersArray((prevState) => {
 					return [...prevState, ...users.users];
 			  });
-
+		setIsLoading(false);
 		setNextLinkToFetch(users.links.next_url);
 	}, []);
 
@@ -117,6 +121,9 @@ const MainSection = () => {
 		<>
 			<main className={style.main}>
 				<h1>Working with GET request</h1>
+				<div className={style.loader}>
+					<ClipLoader color={'#00bdd3'} size={70} loading={isLoading} />
+				</div>
 				{!errors.success && <p className={style.error}>{errors.message}</p>}
 				{errorsArray &&
 					!errors.success &&
@@ -135,11 +142,10 @@ const MainSection = () => {
 						phone={user.phone}
 					/>
 				))}
-				{!!nextLinkToFetch && (
+				{nextLinkToFetch && (
 					<Button txt={'Show more'} onClick={showMoreButtonHandler} />
 				)}
 			</main>
-			<Circle />
 		</>
 	);
 };
