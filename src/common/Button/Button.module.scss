@@ -1,21 +1,24 @@
 @import '../../scss/variables';
 
 @mixin btn-setup {
-    border: none;
-    border-radius: 40px;
-    width: 100px;
-    padding: 0.38rem 0;
-    font-size: 1rem;
-    font-weight: 500;
+	border: none;
+	border-radius: 40px;
+	width: 100px;
+	padding: 0.38rem 0;
+	font-size: 1rem;
+	font-weight: 500;
 	letter-spacing: -0.05px;
 	padding-left: 1px;
 }
 
 .btn {
-    @include btn-setup;
-    background-color: $primary_color;
+	@include btn-setup;
+	background-color: $primary_color;
 }
 
 .btn:disabled {
-    background-color: grey;
+	background-color: #b2b2b2;
+	color: #fff;
+	font-weight: 100;
+	letter-spacing: 0.15px;
 }

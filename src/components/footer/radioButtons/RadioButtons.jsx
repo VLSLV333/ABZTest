@@ -53,11 +53,17 @@ const RadioButtons = ({ formInfo }) => {
 		}
 	}, []);
 
+	useEffect(() => {
+		formInfo(selectedOption);
+	}, [selectedOption, formInfo]);
+
 	const handleOptionChange = (e) => {
+		if (typeof e === 'number') {
+			setSelectedOption(e);
+			return;
+		}
 		setSelectedOption(e.target.value);
 	};
-
-	formInfo(selectedOption);
 
 	return (
 		<div className={style.wholeBlock}>

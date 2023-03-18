@@ -1,11 +1,15 @@
 import UserCard from './userCard/UserCard';
 import Button from '../../common/Button/Button';
+import SubmitContext from '../../store/submit-context';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 
 import style from './MainSection.module.scss';
 
+let firstRender = true;
+
 const MainSection = () => {
+	const context = useContext(SubmitContext);
 	const [usersArray, setUsersArray] = useState([]);
 	const [nextLinkToFetch, setNextLinkToFetch] = useState('');
 	const [errors, setError] = useState({
@@ -13,61 +17,15 @@ const MainSection = () => {
 		message: '',
 	});
 
-	useEffect(() => {
-		try {
-			const getData = async () => {
-				const response = await fetch(
-					'https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6'
-				);
-
-				if (response.status === 404) {
-					setError({
-						success: false,
-						message: 'Page not found',
-					});
-					return;
-				}
-
-				if (response.status === 422) {
-					const err = await response.json();
-					setError({
-						success: false,
-						message: err.message,
-						fails: err.fails,
-					});
-					return;
-				}
-
-				if (!response.ok) {
-					setError({
-						success: false,
-						message: 'Coudln`t fetch data :(',
-					});
-					return;
-				}
-
-				const users = await response.json();
-
-				setUsersArray(users.users);
-				setNextLinkToFetch(users.links.next_url);
-			};
-			getData();
-		} catch (err) {
-			setError({
-				success: false,
-				message: err.message,
-			});
-		}
-	}, []);
-
-	const getNewUsers = async () => {
-		const response = await fetch(nextLinkToFetch);
+	const getNewUsers = useCallback(async (link, update = null) => {
+		const response = await fetch(link);
 
 		if (response.status === 404) {
 			setError({
 				success: false,
 				message: 'Page not found',
 			});
+			setNextLinkToFetch(null);
 			return;
 		}
 
@@ -89,17 +47,53 @@ const MainSection = () => {
 			return;
 		}
 
-		const newUsers = await response.json();
+		const users = await response.json();
 
-		setNextLinkToFetch(newUsers.links.next_url);
-		setUsersArray((prevState) => {
-			return [...prevState, ...newUsers.users];
-		});
-	};
+		update
+			? setUsersArray(users.users)
+			: setUsersArray((prevState) => {
+					return [...prevState, ...users.users];
+			  });
+
+		setNextLinkToFetch(users.links.next_url);
+	}, []);
+
+	useEffect(() => {
+		if (firstRender) {
+			try {
+				firstRender = false;
+				getNewUsers(
+					'https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6'
+				);
+			} catch (err) {
+				setError({
+					success: false,
+					message: err.message,
+				});
+			}
+		}
+	}, [getNewUsers]);
+
+	useEffect(() => {
+		if (context.buttonClicked) {
+			try {
+				getNewUsers(
+					'https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6',
+					true
+				);
+				context.handleClick();
+			} catch (err) {
+				setError({
+					success: false,
+					message: err.message,
+				});
+			}
+		}
+	}, [context.buttonClicked, getNewUsers, context]);
 
 	const showMoreButtonHandler = () => {
 		try {
-			getNewUsers();
+			getNewUsers(nextLinkToFetch);
 		} catch (err) {
 			setError({
 				success: false,
@@ -127,7 +121,7 @@ const MainSection = () => {
 						{errMes}
 					</p>
 				))}
-			{usersArray.map((user) => (
+			{usersArray?.map((user) => (
 				<UserCard
 					key={user.id}
 					email={user.email}
@@ -137,7 +131,7 @@ const MainSection = () => {
 					phone={user.phone}
 				/>
 			))}
-			{nextLinkToFetch && (
+			{!!nextLinkToFetch && (
 				<Button txt={'Show more'} onClick={showMoreButtonHandler} />
 			)}
 		</main>

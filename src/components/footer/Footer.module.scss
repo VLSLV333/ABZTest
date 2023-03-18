@@ -62,7 +62,7 @@
 		display: block;
 		content: 'Upload';
 		height: 3.35rem;
-		padding: 0.5rem 0.90rem;
+		padding: 0.5rem 0.9rem;
 		line-height: 2.3;
 		color: black;
 		border: 1px solid black;
@@ -71,13 +71,13 @@
 	&:before {
 		position: absolute;
 		right: 5.9rem;
-		content: 'Upload your photo';
+		content: var(--before-content);
 	}
 }
 
 .pSelect {
 	margin-bottom: 0.75rem;
-	text-align: flex-start;
+	text-align: start;
 }
 
 .errorText {
@@ -87,4 +87,34 @@
 
 .errorBorder {
 	border: 2px solid $error;
+	&:after {
+		border: 1px solid $error;
+	}
+}
+
+.errorFile {
+	border: 1px solid $error;
+	&:after {
+		border: 1px solid $error;
+		border-left: none;
+		border-bottom: none;
+	}
+	&:before {
+		right: 12.65rem;
+		color: black;
+	}
+}
+
+.changeText {
+	&:before {
+		right: 12.65rem;
+		color: black;
+	}
+}
+.error {
+	color: $error;
+	margin-bottom: 1rem;
+}
+.error:last-of-type {
+	margin-bottom: 2rem;
 }

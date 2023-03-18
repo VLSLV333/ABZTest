@@ -1,75 +1,27 @@
 import style from './Footer.module.scss';
 
-import RadioButtons from './radioButtons/RadioButtons';
-import Button from '../../common/Button/Button';
-import useInput from '../../hooks/useInput';
+import { useState, useContext } from 'react';
 
-import { useState } from 'react';
+import Button from '../../common/Button/Button';
+import RadioButtons from './radioButtons/RadioButtons';
+
+import SubmitContext from '../../store/submit-context';
+
+import useInput from '../../hooks/useInput';
+import useFile from '../../hooks/useFile';
+
+import getToken from '../../helpers/getToken';
+import validateEmail from '../../helpers/validateEmail';
+import validatePhone from '../../helpers/validatePhone';
 
 const Footer = () => {
-	const [file, setFile] = useState(null);
-
-	const validateEmail = (value) => {
-		if (value.length < 2 && value.length > 100) {
-			return false;
-		}
-		const pattern = new RegExp(
-			// eslint-disable-next-line no-control-regex
-			'^(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*")@(?:(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])$'
-		);
-		return pattern.test(value);
-	};
-
-	const validatePhone = (value) => {
-		const pattern = new RegExp('^[+]{0,1}380([0-9]{9})$');
-		return pattern.test(value);
-	};
-
-	const validateFile = () => {
-		const fileInput = document.getElementById('file');
-
-		const filePath = fileInput.value;
-
-		let allowedExtensions = /(\.jpg|\.jpeg)$/i;
-
-		if (!allowedExtensions.exec(filePath)) {
-			setFile({
-				error: true,
-				message: 'The photo format must be jpeg/jpg type',
-			});
-			return;
-		} else {
-			const file = fileInput.files[0];
-			const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-			if (+sizeInMB > 5) {
-				setFile({
-					error: true,
-					message: 'The photo size must not be greater than 5 Mb',
-				});
-				return;
-			}
-
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-
-			reader.onload = (event) => {
-				const img = new Image();
-				img.src = event.target.result;
-
-				img.onload = () => {
-					if (img.width < 70 || img.height < 70) {
-						setFile({
-							error: true,
-							message: 'The minimum photo size is 70x70px',
-						});
-						return;
-					} else {
-						setFile(file);
-					}
-				};
-			};
-		}
-	};
+	const [formErrors, setFormErrors] = useState({
+		success: true,
+		message: '',
+	});
+	const { fileText, file, validateFile, setFileText, setFile } = useFile();
+	const [radioInput, setRadioInput] = useState(null);
+	const context = useContext(SubmitContext);
 
 	const {
 		value: nameInputValue,
@@ -98,10 +50,8 @@ const Footer = () => {
 		reset: phoneInputReset,
 	} = useInput(validatePhone);
 
-	let radioValue = null;
-
 	const radioButtonHandler = (value) => {
-		radioValue = value;
+		setRadioInput(value);
 	};
 
 	let formValid = false;
@@ -110,20 +60,67 @@ const Footer = () => {
 		nameInputIsValid &&
 		emailInputIsValid &&
 		phoneInputIsValid &&
-		radioValue &&
-		file
+		radioInput &&
+		file &&
+		!file.error
 	) {
 		formValid = true;
 	}
 
-	const formHandler = (event) => {
+	const formHandler = async (event) => {
 		event.preventDefault();
-		console.log(radioValue);
+		const token = await getToken();
 
+		const formData = new FormData();
+		formData.append('position_id', +radioInput);
+		formData.append('name', nameInputValue);
+		formData.append('email', emailInputValue);
+		formData.append('phone', phoneInputValue);
+		formData.append('photo', file);
+
+		const response = await fetch(
+			'https://frontend-test-assignment-api.abz.agency/api/v1/users',
+			{ method: 'POST', body: formData, headers: { Token: token } }
+		);
+
+		if (response.status === 401 || response.status === 409) {
+			const err = await response.json();
+			setFormErrors({
+				success: err.success,
+				message: err.message,
+			});
+			return;
+		}
+
+		if (response.status === 422) {
+			const err = await response.json();
+			setFormErrors({
+				success: false,
+				message: err.message,
+				fails: err.fails,
+			});
+			return;
+		}
+
+		context.handleClick();
 		nameInputReset();
 		emailInputReset();
 		phoneInputReset();
+		setFileText('Upload your photo');
+		setFile(null);
+		setFormErrors({
+			success: true,
+			message: '',
+		});
 	};
+
+	let formErrorsArray = [];
+
+	if (formErrors.fails) {
+		for (let error in formErrors.fails) {
+			formErrorsArray.push(...formErrors.fails[error]);
+		}
+	}
 
 	return (
 		<footer className={style.footer}>
@@ -173,9 +170,26 @@ const Footer = () => {
 				<RadioButtons formInfo={radioButtonHandler} />
 				<label className={style.file}>
 					<input type='file' id='file' onChange={validateFile} />
-					<span className={style.fileCustom}></span>
+					<span
+						className={`${style.fileCustom} ${
+							file?.error ? style.errorFile : file ? style.changeText : ''
+						}`}
+						style={{
+							'--before-content': `"${fileText}"`,
+						}}
+					></span>
 				</label>
 				{file?.error && <p className={style.errorText}>{file.message}</p>}
+				{!formErrors.success && (
+					<p className={style.error}>{formErrors.message}</p>
+				)}
+				{formErrorsArray &&
+					!formErrors.success &&
+					formErrorsArray.map((errMes) => (
+						<p key={errMes} className={style.error}>
+							{errMes}
+						</p>
+					))}
 				<Button txt={'Sign up'} disabled={!formValid} />
 			</form>
 		</footer>
