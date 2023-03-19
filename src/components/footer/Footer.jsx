@@ -131,7 +131,7 @@ const Footer = () => {
 	}
 
 	return (
-		<footer className={style.footer}>
+		<footer className={style.footer} id='signUp'>
 			<h1>Working with POST request</h1>
 			<form onSubmit={formHandler}>
 				<input

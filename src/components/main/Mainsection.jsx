@@ -122,7 +122,7 @@ const MainSection = () => {
 
 	return (
 		<>
-			<main className={style.main}>
+			<main className={style.main} id='users'>
 				<h1>Working with GET request</h1>
 				<div className={style.loader}>
 					<ClipLoader color={'#00bdd3'} size={70} loading={isLoading} />

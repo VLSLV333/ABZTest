@@ -11,12 +11,12 @@ const Navigation = () => {
 			</a>
 			<ul className={style.ul}>
 				<li>
-					<a href='/'>
+					<a href='#users'>
 						<Button txt='Users' />
 					</a>
 				</li>
 				<li className={style.hero}>
-					<a href='/'>
+					<a href='#signUp'>
 						<Button txt='Sign up' />
 					</a>
 				</li>
