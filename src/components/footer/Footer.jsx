@@ -93,6 +93,7 @@ const Footer = () => {
 				success: err.success,
 				message: err.message,
 			});
+			setIsLoading(false);
 			return;
 		}
 
@@ -103,6 +104,7 @@ const Footer = () => {
 				message: err.message,
 				fails: err.fails,
 			});
+			setIsLoading(false);
 			return;
 		}
 
