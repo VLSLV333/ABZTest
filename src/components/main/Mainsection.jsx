@@ -77,6 +77,7 @@ const MainSection = () => {
 					success: false,
 					message: err.message,
 				});
+				setIsLoading(false);
 			}
 		}
 	}, [getNewUsers]);
@@ -94,6 +95,7 @@ const MainSection = () => {
 					success: false,
 					message: err.message,
 				});
+				setIsLoading(false);
 			}
 		}
 	}, [context.buttonClicked, getNewUsers, context]);
@@ -106,6 +108,7 @@ const MainSection = () => {
 				success: false,
 				message: err.message,
 			});
+			setIsLoading(false);
 		}
 	};
 
