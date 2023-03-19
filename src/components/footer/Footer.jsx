@@ -5,6 +5,8 @@ import { useState, useContext } from 'react';
 import Button from '../../common/Button/Button';
 import RadioButtons from './radioButtons/RadioButtons';
 
+import ClipLoader from 'react-spinners/ClipLoader';
+
 import SubmitContext from '../../store/submit-context';
 
 import useInput from '../../hooks/useInput';
@@ -15,6 +17,7 @@ import validateEmail from '../../helpers/validateEmail';
 import validatePhone from '../../helpers/validatePhone';
 
 const Footer = () => {
+	const [formIsSubmiting, setIsLoading] = useState(false);
 	const [formErrors, setFormErrors] = useState({
 		success: true,
 		message: '',
@@ -69,6 +72,7 @@ const Footer = () => {
 
 	const formHandler = async (event) => {
 		event.preventDefault();
+		setIsLoading(true);
 		const token = await getToken();
 
 		const formData = new FormData();
@@ -102,6 +106,7 @@ const Footer = () => {
 			return;
 		}
 
+		context.handleModal();
 		context.handleClick();
 		nameInputReset();
 		emailInputReset();
@@ -112,6 +117,7 @@ const Footer = () => {
 			success: true,
 			message: '',
 		});
+		setIsLoading(false);
 	};
 
 	let formErrorsArray = [];
@@ -127,7 +133,7 @@ const Footer = () => {
 			<h1>Working with POST request</h1>
 			<form onSubmit={formHandler}>
 				<input
-					className={`${style.firstTree} ${
+					className={`${style.first3Input} ${
 						nameInputHasError ? style.errorBorder : ''
 					}`}
 					placeholder='Your name'
@@ -141,7 +147,7 @@ const Footer = () => {
 					</p>
 				)}
 				<input
-					className={`${style.firstTree} ${
+					className={`${style.first3Input} ${
 						emailInputHasError ? style.errorBorder : ''
 					}`}
 					placeholder='Email'
@@ -153,7 +159,7 @@ const Footer = () => {
 					<p className={style.errorText}>User email, must be a valid email</p>
 				)}
 				<input
-					className={`${style.firstTree} ${
+					className={`${style.first3Input} ${
 						phoneInputHasError ? style.errorBorder : ''
 					}`}
 					placeholder='Phone'
@@ -162,7 +168,7 @@ const Footer = () => {
 					onBlur={phoneInputBlurHadler}
 				/>
 				{phoneInputHasError && (
-					<p className={style.errorText}>
+					<p className={style.errorTextHero}>
 						Number should start with code of Ukraine +380
 					</p>
 				)}
@@ -181,17 +187,20 @@ const Footer = () => {
 				</label>
 				{file?.error && <p className={style.errorText}>{file.message}</p>}
 				{!formErrors.success && (
-					<p className={style.error}>{formErrors.message}</p>
+					<p className={style.formError}>{formErrors.message}</p>
 				)}
 				{formErrorsArray &&
 					!formErrors.success &&
 					formErrorsArray.map((errMes) => (
-						<p key={errMes} className={style.error}>
+						<p key={errMes} className={style.formError}>
 							{errMes}
 						</p>
 					))}
-				<Button txt={'Sign up'} disabled={!formValid} />
+				{!formIsSubmiting && <Button txt={'Sign up'} disabled={!formValid} />}
 			</form>
+			<div className={style.loader}>
+				<ClipLoader color={'#00bdd3'} size={70} loading={formIsSubmiting} />
+			</div>
 		</footer>
 	);
 };

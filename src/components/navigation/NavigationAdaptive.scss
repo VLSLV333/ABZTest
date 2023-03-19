@@ -1,0 +1,14 @@
+$navPadding768: 1rem 2rem 0.6rem;
+$navPadding1024: 1rem 3.77rem 0.6rem;
+
+@mixin tablet {
+    @media only screen and (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin laptop {
+    @media only screen and (min-width: 1024px) {
+        @content;
+    }
+}

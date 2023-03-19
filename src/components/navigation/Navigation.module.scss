@@ -1,7 +1,20 @@
+@use './NavigationAdaptive.scss' as adaptive;
+
 .nav {
 	display: flex;
 	justify-content: space-between;
-	padding: 1rem 1rem 0.6rem 1rem;
+	padding: 1rem 1rem 0.6rem;
+
+	max-width: 80.65rem;
+	margin: 0 auto;
+
+	@include adaptive.tablet {
+		padding: adaptive.$navPadding768;
+	}
+
+	@include adaptive.laptop {
+		padding: adaptive.$navPadding1024;
+	}
 
 	& svg {
 		position: relative;

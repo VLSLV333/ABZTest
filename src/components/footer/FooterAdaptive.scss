@@ -1,0 +1,38 @@
+@import '../../scss/variables';
+
+$formMaxWidth768: 23.75rem;
+
+$moveUploadButton768: 18.5rem;
+
+$moveUploadYourPhoto768: 9.13rem;
+
+$moveItemText768: 15.55rem;
+
+$buttonPadding1024: 0.35rem 0;
+
+@mixin errorText {
+	color: $error;
+	text-align: start;
+	margin: -3.2rem 0 1.27rem 1rem;
+	font-size: 12px;
+}
+
+@mixin styleTextAfterFileAdded {
+	right: 12.65rem;
+	color: black;
+	@include tablet {
+		right: $moveItemText768;
+	}
+}
+
+@mixin tablet {
+	@media only screen and (min-width: 768px) {
+		@content;
+	}
+}
+
+@mixin laptop {
+	@media only screen and (min-width: 1024px) {
+		@content;
+	}
+}

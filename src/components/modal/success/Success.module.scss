@@ -1,0 +1,11 @@
+.modal {
+	position: fixed;
+    z-index: 7;
+	top: 30vh;
+	left: calc(50% - 264px);
+	margin: 0 auto;
+    overflow: hidden;
+	& h1 {
+		margin-bottom: 3rem;
+	}
+}

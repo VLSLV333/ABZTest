@@ -1,28 +1,41 @@
+@use './FooterAdaptive.scss' as adaptive;
+
 @import '../../scss/variables';
 
 .footer {
 	padding: 1rem;
 	text-align: center;
-	// max-width: 22.5rem;
-	// margin: 0 auto;
 
 	& h1 {
 		margin-bottom: 3.15rem;
 	}
+	& form {
+		margin: 0 auto;
+		max-width: 20.5rem;
+
+		@include adaptive.tablet {
+			max-width: adaptive.$formMaxWidth768;
+		}
+	}
+	& button {
+		@include adaptive.laptop {
+			padding: adaptive.$buttonPadding1024;
+		}
+	}
 }
-.firstTree {
+.first3Input {
 	font-size: 16px;
 	line-height: 26px;
 	padding: 0.8rem 0.93rem;
 	background: transparent;
-	border: 1px solid #cacaca;
+	border: 1px solid $input_border;
 	border-radius: 4px;
 	margin-bottom: 3.15rem;
 	width: 100%;
 	outline: currentColor;
 }
 
-.firstTree:last-of-type {
+.first3Input:last-of-type {
 	margin-bottom: 2.7rem;
 }
 .file {
@@ -31,7 +44,6 @@
 	cursor: pointer;
 	height: 3rem;
 
-	max-width: 20.5rem;
 	margin: 0 auto 3.5rem;
 
 	& input {
@@ -42,6 +54,7 @@
 	}
 }
 
+// SCSS to create custom upload file input
 .fileCustom {
 	position: absolute;
 	right: 0;
@@ -50,8 +63,9 @@
 	height: 3.35rem;
 	padding: 0.5rem 1rem;
 	line-height: 2.3;
-	color: #979797;
-	border: 0.075rem solid #cacaca;
+	color: $helper_text;
+	border: 0.075rem solid $input_border;
+	border-left: none;
 	border-radius: 0.25rem;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -68,14 +82,22 @@
 		height: 3.35rem;
 		padding: 0.5rem 0.9rem;
 		line-height: 2.3;
-		color: black;
-		border: 1px solid black;
+		color: $customUploadButton;
+		border: 1px solid $customUploadButton;
 		border-radius: 0.25rem 0 0 0.25rem;
+
+		@include adaptive.tablet {
+			right: adaptive.$moveUploadButton768;
+		}
 	}
 	&:before {
 		position: absolute;
 		right: 5.9rem;
 		content: var(--before-content);
+
+		@include adaptive.tablet {
+			right: adaptive.$moveUploadYourPhoto768;
+		}
 	}
 }
 
@@ -85,8 +107,12 @@
 }
 
 .errorText {
-	color: $error;
-	margin: -3rem 0 1.27rem;
+	@include adaptive.errorText;
+}
+
+.errorTextHero {
+	@include adaptive.errorText;
+	margin-top: -2.75rem;
 }
 
 .errorBorder {
@@ -97,28 +123,24 @@
 }
 
 .errorFile {
-	border: 1px solid $error;
+	border: 2px solid $error;
 	&:after {
-		border: 1px solid $error;
-		border-left: none;
-		border-bottom: none;
+		height: 3.3rem;
+		border: 2px solid $error;
+		border-style: none solid none none;
 	}
 	&:before {
-		right: 12.65rem;
-		color: black;
+		@include adaptive.styleTextAfterFileAdded;
 	}
 }
 
-.changeText {
-	&:before {
-		right: 12.65rem;
-		color: black;
-	}
+.changeText:before {
+	@include adaptive.styleTextAfterFileAdded;
 }
-.error {
+.formError {
 	color: $error;
 	margin-bottom: 1rem;
 }
-.error:last-of-type {
+.formError:last-of-type {
 	margin-bottom: 2rem;
 }

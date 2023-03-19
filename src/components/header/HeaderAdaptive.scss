@@ -1,0 +1,44 @@
+$h1Padding768: 5.6rem 2rem 0.3rem;
+$h1Padding1024: 10.25rem 2rem 0.35rem;
+
+$buttonBottomPadding768: 0.38rem;
+
+$buttonBottomPadding1024: 0.35rem;
+
+$headerMinHeight1024: 40.65rem;
+
+@mixin background768 {
+	background-size: 170%;
+	background-position-y: 95.2%;
+	background-position-x: 81%;
+}
+
+@mixin background1024 {
+	background-size: 170%;
+	background-position-y: 93.5%;
+	background-position-x: 81%;
+}
+
+@mixin background2560 {
+	background-size: 219%;
+	background-position-y: 80%;
+	background-position-x: 50%;
+}
+
+@mixin tablet {
+	@media only screen and (min-width: 768px) {
+		@content;
+	}
+}
+
+@mixin laptop {
+	@media only screen and (min-width: 1024px) {
+		@content;
+	}
+}
+
+@mixin cinema {
+	@media only screen and (min-width: 2560px) {
+		@content;
+	}
+}

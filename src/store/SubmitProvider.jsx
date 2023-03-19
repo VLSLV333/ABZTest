@@ -3,13 +3,21 @@ import SubmitContext from './submit-context';
 
 const SubmitProvider = (props) => {
 	const [clicked, setClicked] = useState(false);
+	const [modal, setModal] = useState(false);
+
 	const clickHandler = () => {
-		setClicked(prevState => !prevState);
+		setClicked((prevState) => !prevState);
+	};
+
+	const modalHandler = () => {
+		setModal((prevState) => !prevState);
 	};
 
 	const submitContext = {
 		buttonClicked: clicked,
+		showModal: modal,
 		handleClick: clickHandler,
+		handleModal: modalHandler,
 	};
 
 	return (

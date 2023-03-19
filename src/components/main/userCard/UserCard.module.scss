@@ -1,14 +1,24 @@
+@use './UserCardAdaptive.scss' as adaptive;
+
 .section {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	margin-bottom: 3.8rem;
+	margin-bottom: 1.25rem;
+
+	@include adaptive.tablet {
+		margin-bottom: adaptive.$sectionMarginBottom768;
+	}
+
+	@include adaptive.laptop {
+		margin-bottom: adaptive.$sectionMarginBottom1024;
+	}
 
 	& img,
 	svg {
 		width: 70px;
 		border-radius: 40px;
-		margin: 0 auto 1.25rem;
+		margin: 1.25rem auto;
 	}
 	p {
 		margin: 0 auto;
@@ -17,9 +27,28 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		cursor: pointer;
+		position: relative;
+		left: 0.5px;
+
+		&:last-of-type {
+			margin-bottom: 1.25rem;
+		}
+
+		@include adaptive.tablet {
+			left: adaptive.$pleftMove768;
+		}
+
+		@include adaptive.laptop {
+			max-width: adaptive.$pMaxWidth1024;
+		}
+
+		@include adaptive.cinema {
+			max-width: adaptive.$pMaxWidth2560;
+			left: adaptive.$pleftMove2560;
+		}
 	}
 
 	.name {
-		margin-bottom: 1.2rem;
+		margin-bottom: 1.25rem;
 	}
 }

@@ -132,16 +132,18 @@ const MainSection = () => {
 							{errMes}
 						</p>
 					))}
-				{usersArray?.map((user) => (
-					<UserCard
-						key={user.id}
-						email={user.email}
-						name={user.name}
-						photo={user.photo}
-						position={user.position}
-						phone={user.phone}
-					/>
-				))}
+				<div className={style.userCards}>
+					{usersArray?.map((user) => (
+						<UserCard
+							key={user.id}
+							email={user.email}
+							name={user.name}
+							photo={user.photo}
+							position={user.position}
+							phone={user.phone}
+						/>
+					))}
+				</div>
 				{nextLinkToFetch && (
 					<Button txt={'Show more'} onClick={showMoreButtonHandler} />
 				)}

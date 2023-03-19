@@ -1,0 +1,28 @@
+$sectionMarginBottom768: 1rem;
+$sectionMarginBottom1024: 1.55rem;
+
+$pleftMove768: 1px;
+$pleftMove2560: 0px;
+
+$pMaxWidth1024: 15.25rem;
+$pMaxWidth2560: 20.75rem;
+
+
+
+@mixin tablet {
+	@media only screen and (min-width: 768px) {
+		@content;
+	}
+}
+
+@mixin laptop {
+	@media only screen and (min-width: 1024px) {
+		@content;
+	}
+}
+
+@mixin cinema {
+	@media only screen and (min-width: 2560px) {
+		@content;
+	}
+}

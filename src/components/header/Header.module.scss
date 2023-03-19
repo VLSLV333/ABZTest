@@ -1,27 +1,64 @@
+@use './HeaderAdaptive.scss' as adaptive;
+@import '../../scss/variables';
+
 .header {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-		url('../../assets/headerBG/pexels-alexandr-podvalny-1227513.jpeg');
+		url('../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp');
 	text-align: center;
-	background-size: 345%;
-	background-position-x: 51%;
-	background-position-y: 98.2%;
+	background-size: 343%;
+	background-position-x: 51.2%;
+	background-position-y: 98.8%;
 	color: #ffffff;
-    
-    min-height: 500px;
+
+	max-width: 73.15rem;
+	margin: 0 auto;
+
+	min-height: 31.25rem;
+
+	@include adaptive.tablet {
+		@include adaptive.background768;
+	}
+
+	@include adaptive.laptop {
+		@include adaptive.background1024;
+		min-height: adaptive.$headerMinHeight1024;
+	}
+
+	@include adaptive.cinema {
+		@include adaptive.background2560;
+	}
 
 	& h1 {
-		padding: 2.5rem 2rem 0.4rem;
+		padding: 2.5rem 2rem 0.35rem;
+
+		@include adaptive.tablet {
+			padding: adaptive.$h1Padding768;
+		}
+
+		@include adaptive.laptop {
+			padding: adaptive.$h1Padding1024;
+		}
 	}
 
 	& p {
 		padding: 1rem;
-		position: relative;
-		bottom: 1px;
+		color: $pTextHeader;
 	}
 
 	& button {
 		margin: 1rem 1rem 2.5rem;
-		position: relative;
-		bottom: 1px;
+		padding: 0.35rem 0;
+
+		@include adaptive.tablet {
+			padding-bottom: adaptive.$buttonBottomPadding768;
+		}
+
+		@include adaptive.laptop {
+			padding-bottom: adaptive.$buttonBottomPadding1024;
+		}
+	}
+	& section {
+		max-width: 26.65rem;
+		margin: 0 auto;
 	}
 }
