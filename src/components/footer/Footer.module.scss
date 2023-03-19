@@ -131,6 +131,7 @@
 	}
 	&:before {
 		@include adaptive.styleTextAfterFileAdded;
+		bottom: 7.5px;
 	}
 }
 
