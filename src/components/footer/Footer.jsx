@@ -177,7 +177,7 @@ const Footer = () => {
 				<p className={style.pSelect}>Select your position</p>
 				<RadioButtons formInfo={radioButtonHandler} />
 				<label className={style.file} htmlFor='file'>
-					<input type='file' id='file' onChange={validateFile} />
+					<input type='file' id='file' onChange={validateFile} placeholder='file'/>
 					<span
 						className={`${style.fileCustom} ${
 							file?.error ? style.errorFile : file ? style.changeText : ''

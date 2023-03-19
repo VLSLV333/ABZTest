@@ -1,6 +1,24 @@
 @use './HeaderAdaptive.scss' as adaptive;
 @import '../../scss/variables';
 
+
+
+@supports (display: grid) {
+	link[rel='preload'][as='image'][type='image/webp'][href='../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp'] {
+		fetchpriority: high;
+	}
+}
+
+@supports (display: grid) {
+	@media (min-width: 768px) {
+		link[rel='preload'][as='image'][type='image/webp'][href='../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp'] {
+			fetchpriority: high;
+		}
+	}
+}
+
+
+
 .header {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url('../../assets/headerBG/mobile.webp');
@@ -16,8 +34,8 @@
 	min-height: 31.25rem;
 
 	@include adaptive.tablet {
-		@include adaptive.background768;
 		background: adaptive.$headerBackfroundFrom768;
+		@include adaptive.background768;
 	}
 
 	@include adaptive.laptop {
