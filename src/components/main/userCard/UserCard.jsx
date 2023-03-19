@@ -22,6 +22,7 @@ const UserCard = ({ email, name, photo, position, phone }) => {
 					onError={imageErrorHandler}
 					width='70px'
 					height='70px'
+					loading='lazy'
 				/>
 			)}
 			{errorInImage && <PhotoFallBack />}

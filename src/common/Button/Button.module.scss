@@ -9,6 +9,7 @@
 	font-weight: 500;
 	letter-spacing: -0.05px;
 	padding-left: 1px;
+	color: black;
 }
 
 .btn {
@@ -20,8 +21,8 @@
 }
 
 .btn:disabled {
-	background-color: $button_disabled;
-	color: #fff;
+	background-color: $button_disabled_bg;
+	color: $button_disabled_color;
 	font-weight: 100;
 	letter-spacing: 0.15px;
 }

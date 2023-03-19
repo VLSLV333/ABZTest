@@ -7,25 +7,39 @@ $buttonBottomPadding1024: 0.35rem;
 
 $headerMinHeight1024: 40.65rem;
 
-$headerBackfroundFrom768: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-url('../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp');
+@mixin background430 {
+	background-size: 180%;
+	background-position-x: 50%;
+}
 
 @mixin background768 {
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url('../../assets/headerBG/tablet.webp');
 	background-size: 170%;
 	background-position-y: 95.2%;
 	background-position-x: 81%;
 }
 
 @mixin background1024 {
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url('../../assets/headerBG/desktop.webp');
 	background-size: 170%;
 	background-position-y: 93.5%;
 	background-position-x: 81%;
 }
 
 @mixin background2560 {
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url('../../assets/headerBG/cinema.webp');
 	background-size: 219%;
 	background-position-y: 80%;
 	background-position-x: 50%;
+}
+
+@mixin headerOnlyBgMove {
+	@media only screen and (min-width: 430px) {
+		@content;
+	}
 }
 
 @mixin tablet {

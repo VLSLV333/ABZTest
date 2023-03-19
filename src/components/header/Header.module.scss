@@ -1,27 +1,13 @@
 @use './HeaderAdaptive.scss' as adaptive;
 @import '../../scss/variables';
 
-
-
-@supports (display: grid) {
-	link[rel='preload'][as='image'][type='image/webp'][href='../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp'] {
-		fetchpriority: high;
-	}
-}
-
-@supports (display: grid) {
-	@media (min-width: 768px) {
-		link[rel='preload'][as='image'][type='image/webp'][href='../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp'] {
-			fetchpriority: high;
-		}
-	}
-}
-
-
-
 .header {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url('../../assets/headerBG/mobile.webp');
+	// background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+	// 	url('../../assets/headerBG/testMobile2550.webp');
+	// background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+	// 	url('../../assets/headerBG/testMobile3000.webp');
 	text-align: center;
 	background-size: 343%;
 	background-position-x: 51.2%;
@@ -33,8 +19,11 @@
 
 	min-height: 31.25rem;
 
+	@include adaptive.headerOnlyBgMove {
+		@include adaptive.background430;
+	}
+
 	@include adaptive.tablet {
-		background: adaptive.$headerBackfroundFrom768;
 		@include adaptive.background768;
 	}
 
