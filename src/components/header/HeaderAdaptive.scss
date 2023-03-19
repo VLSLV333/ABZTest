@@ -7,6 +7,9 @@ $buttonBottomPadding1024: 0.35rem;
 
 $headerMinHeight1024: 40.65rem;
 
+$headerBackfroundFrom768: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+url('../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp');
+
 @mixin background768 {
 	background-size: 170%;
 	background-position-y: 95.2%;

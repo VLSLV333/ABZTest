@@ -3,7 +3,7 @@
 
 .header {
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-		url('../../assets/headerBG/pexels-alexandr-podvalny-1227513.webp');
+		url('../../assets/headerBG/mobile.webp');
 	text-align: center;
 	background-size: 343%;
 	background-position-x: 51.2%;
@@ -17,6 +17,7 @@
 
 	@include adaptive.tablet {
 		@include adaptive.background768;
+		background: adaptive.$headerBackfroundFrom768;
 	}
 
 	@include adaptive.laptop {

@@ -6,7 +6,7 @@ import style from './Navigation.module.scss';
 const Navigation = () => {
 	return (
 		<nav className={style.nav}>
-			<a href='/'>
+			<a href='/' aria-label='Site logo which reloads site on click' >
 				<Logo />
 			</a>
 			<ul className={style.ul}>
@@ -15,7 +15,7 @@ const Navigation = () => {
 						<Button txt='Users' />
 					</a>
 				</li>
-				<li  className={style.hero}>
+				<li className={style.hero}>
 					<a href='/'>
 						<Button txt='Sign up' />
 					</a>
