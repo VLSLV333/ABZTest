@@ -12,16 +12,20 @@
 		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-		<link
-			rel="preload"
-			href="./static/media/mobile.31ded3eceed8dd35ce1e.webp"
-			as="image"
-			type="image/webp"
-			fetchpriority="high"
-		/>
 		<style>
 			@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 		</style>
+		<script>
+			if (window.innerWidth < 768) {
+			  const linkElement = document.createElement("link");
+			  linkElement.rel = "preload";
+			  linkElement.href = "./static/media/mobile.31ded3eceed8dd35ce1e.webp";
+			  linkElement.as = "image";
+			  linkElement.type = "image/webp";
+			  linkElement.fetchPriority = "high";
+			  document.head.appendChild(linkElement);
+			}
+			</script>
 		<title>abz task</title>
 	</head>
 	<body>
