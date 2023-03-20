@@ -13,7 +13,9 @@ const Header = () => {
 					mind. They should also be excited to learn, as the world of Front-End
 					Development keeps evolving.
 				</p>
-				<Button txt={'Sign up'} />
+				<a href='#signUp'>
+					<Button txt={'Sign up'} />
+				</a>
 			</section>
 		</header>
 	);
