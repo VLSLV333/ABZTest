@@ -1,0 +1,14 @@
+# Test task specially for abz.agency
+
+I have completed all items as described in the test assignment:
+a) I have created navigation containing the provided logo and mentioned buttons that link to proper parts of the website. All buttons on the website are using styles given in the mockup.
+b) Later a Header was added using the given background image, the image was converted to webp and furthermore 4 different versions of it were created for certain devices. Header includes h1 and p tags which are styled as shown in the typography section of the mockup ( as well as all other text on the website).
+c) Main was created next, it fetches data according to business logic mentioned in "Working with REST API (GET)" section of test assignment, while data is being loaded preloader UI is shown - it was created according to the Figma (I have used react-spinners package), errors are handled depending on expected responses of backend. Inside of Main I added User cards which are described in mockup, every user card has a tooltip (I have used react-tooltip package), also in case the backend provides us with user data which does not contain a photo, the script will replace missing photo with photo-cover.svg. The last component in Main is the "Show more" button which disappears in case there are no more users to be displayed.
+d) After that I have created a Footer which contains a form with submit logic provided in the "Working with REST API (POST)" section of test assignment, the form has implemented validation and registration logic, additionally the form itself have error handling logic according to API documentation. The form consists of 3 inputs and a custom Upload component (I have created it with pure SCSS), all have conditional error text messages and validation logic described in API documentation. The Upload component also changes placeholder text depending on its state (this was achieved using SCSS and JS together). Also the form contains custom (I have created them with pure SCSS ) dynamic radio buttons which upload needed information from backend. The shown list of users will collapse after registration to show the new user first.
+e) The last component is modal success notification which is shown when new user is registered using desktop. The notification and white blur behind it are being teleported so not rendered in "root" div. 
+f) I have done a bonus task of optimization, I was able to achieve a green zone in Google Lighthouse check for mobile and desktop.Steps of optimization:
+- converted background image to webp format, created 4 different images for different devices;
+- preconnected google fonts;
+- added inline script for preloading background image for mobile;
+- added lazy loading to React components which are not crucial for FCP and LCP;
+- js and css were minified.
